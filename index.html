@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<title>for jaya ♡</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+  /* ============================================================
+     EDITABLE CONTENT LIVES IN THE <script> BLOCK AT THE BOTTOM,
+     inside `const proposalData = { ... }`.
+     Swap names, memories and reasons there — no CSS/HTML editing needed.
+     ============================================================ */
+
+  :root{
+    --cream: #FFF8F1;
+    --blush: #FFD9E6;
+    --pink: #FF9FBB;
+    --pink-deep: #E8748F;
+    --lavender: #EADFF5;
+    --lavender-deep: #C9B3E8;
+    --ink: #5B3B4B;
+    --ink-soft: #8A6478;
+    --white: #FFFFFF;
+    --shadow: rgba(180, 120, 150, 0.18);
+    --radius-lg: 28px;
+    --radius-md: 20px;
+    --radius-sm: 14px;
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  *{ box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  html, body{
+    height: 100%;
+    margin: 0;
+    overscroll-behavior-y: none;
+  }
+
+  body{
+    font-family: 'Quicksand', sans-serif;
+    background: linear-gradient(180deg, var(--cream) 0%, var(--blush) 55%, var(--lavender) 100%);
+    background-attachment: fixed;
+    color: var(--ink);
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    overflow-x: hidden;
+    padding-top: var(--safe-top);
+    padding-bottom: var(--safe-bottom);
+  }
+
+  h1, h2, h3, .display{
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .app{
+    width: 100%;
+    max-width: 430px;
+    min-height: 100vh;
+    min-height: 100dvh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* floating ambient hearts/sparkles behind everything */
+  .ambient{
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .ambient span{
+    position: absolute;
+    bottom: -40px;
+    opacity: 0.35;
+    animation: floatUp linear infinite;
+    color: var(--pink);
+    font-size: 18px;
+  }
+  @keyframes floatUp{
+    0%{ transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
+    10%{ opacity: 0.4; }
+    90%{ opacity: 0.25; }
+    100%{ transform: translateY(-110vh) translateX(var(--drift, 20px)) rotate(25deg); opacity: 0; }
+  }
+
+  /* ---------- screens ---------- */
+  .screen{
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 24px;
+    text-align: center;
+    gap: 18px;
+  }
+  .screen.active{
+    display: flex;
+    animation: screenIn 0.55s ease both;
+  }
+  @keyframes screenIn{
+    from{ opacity: 0; transform: translateY(18px) scale(0.98); }
+    to{ opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .eyebrow-icon{
+    font-size: 34px;
+    line-height: 1;
+    animation: gentleBob 3.2s ease-in-out infinite;
+  }
+  @keyframes gentleBob{
+    0%, 100%{ transform: translateY(0) rotate(-4deg); }
+    50%{ transform: translateY(-8px) rotate(4deg); }
+  }
+
+  .title-xl{ font-size: 30px; color: var(--pink-deep); }
+  .title-lg{ font-size: 25px; color: var(--ink); }
+  .subtitle{ font-size: 16px; color: var(--ink-soft); line-height: 1.5; max-width: 320px; }
+
+  /* ---------- buttons ---------- */
+  .btn{
+    font-family: 'Fredoka', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 999px;
+    padding: 16px 30px;
+    cursor: pointer;
+    min-height: 52px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  .btn:active{ transform: scale(0.94); }
+
+  .btn-primary{
+    background: linear-gradient(135deg, var(--pink) 0%, var(--pink-deep) 100%);
+    color: var(--white);
+    box-shadow: 0 10px 24px var(--shadow);
+  }
+  .btn-primary.tapped{ animation: pulseTap 0.35s ease; }
+  @keyframes pulseTap{
+    0%{ transform: scale(1); }
+    40%{ transform: scale(0.9); box-shadow: 0 4px 10px var(--shadow); }
+    100%{ transform: scale(1); }
+  }
+
+  .btn-secondary{
+    background: var(--white);
+    color: var(--ink-soft);
+    border: 2px solid var(--lavender-deep);
+  }
+
+  .btn-ghost{
+    background: transparent;
+    color: var(--pink-deep);
+    text-decoration: underline;
+    padding: 10px 16px;
+    min-height: 44px;
+  }
+
+  /* ---------- opening screen ---------- */
+  #screen-opening .app-icon{
+    width: 84px; height: 84px;
+    border-radius: 26px;
+    background: linear-gradient(135deg, var(--pink) 0%, var(--lavender-deep) 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 38px;
+    box-shadow: 0 14px 30px var(--shadow);
+    margin-bottom: 4px;
+  }
+
+  /* ---------- story cards ---------- */
+  .story-wrap{ width: 100%; max-width: 340px; display: flex; flex-direction: column; gap: 20px; align-items: center; }
+
+  .card-stage{
+    position: relative;
+    width: 100%;
+    height: 300px;
+  }
+
+  .story-card{
+    position: absolute;
+    inset: 0;
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 16px 34px var(--shadow);
+    padding: 30px 26px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 14px;
+    transition: transform 0.4s cubic-bezier(.3,.9,.4,1), opacity 0.4s ease;
+  }
+  .story-card .icon{ font-size: 30px; }
+  .story-card p{ font-size: 18px; line-height: 1.55; color: var(--ink); margin: 0; }
+  .story-card .tag{ font-size: 12px; letter-spacing: 0.02em; color: var(--pink-deep); }
+
+  .dots{ display: flex; gap: 8px; }
+  .dot{ width: 8px; height: 8px; border-radius: 50%; background: var(--lavender-deep); opacity: 0.4; transition: all 0.25s ease; }
+  .dot.active{ opacity: 1; width: 22px; border-radius: 5px; background: var(--pink-deep); }
+
+  .story-nav{ display: flex; gap: 12px; width: 100%; justify-content: center; }
+  .tap-hint{ font-size: 13px; color: var(--ink-soft); opacity: 0.8; }
+
+  /* ---------- reasons grid ---------- */
+  .reasons-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    width: 100%;
+    max-width: 380px;
+  }
+  .reason-card{
+    background: var(--white);
+    border-radius: var(--radius-md);
+    padding: 16px 12px;
+    box-shadow: 0 8px 18px var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(14px);
+    animation: cardPop 0.5s ease forwards;
+  }
+  .reason-card .icon{ font-size: 24px; }
+  .reason-card p{ font-size: 13.5px; line-height: 1.4; margin: 0; color: var(--ink); }
+  @keyframes cardPop{ to{ opacity: 1; transform: translateY(0); } }
+
+  /* ---------- proposal reveal ---------- */
+  #screen-proposal{ justify-content: center; gap: 22px; }
+  .reveal-lines{ min-height: 220px; display: flex; flex-direction: column; justify-content: center; gap: 14px; max-width: 330px; }
+  .reveal-line{
+    font-size: 18px;
+    line-height: 1.55;
+    opacity: 0;
+    transform: translateY(10px);
+    color: var(--ink);
+  }
+  .reveal-line.show{ animation: lineIn 0.6s ease forwards; }
+  @keyframes lineIn{ to{ opacity: 1; transform: translateY(0); } }
+  .reveal-line.name{ font-family: 'Fredoka', sans-serif; font-size: 24px; color: var(--pink-deep); }
+
+  .question-block{ opacity: 0; transform: translateY(10px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .question-block.show{ opacity: 1; transform: translateY(0); }
+  .question-block h2{ font-size: 27px; color: var(--pink-deep); margin-bottom: 18px; }
+
+  .choice-row{ display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 300px; }
+
+  /* ---------- celebration screen ---------- */
+  #screen-yes .celebrate-card{
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: 30px 26px;
+    box-shadow: 0 18px 36px var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    max-width: 330px;
+  }
+  .glitch-text{ font-family: 'Fredoka', sans-serif; font-size: 15px; letter-spacing: 0.02em; color: var(--ink-soft); background: var(--lavender); padding: 6px 14px; border-radius: 999px; }
+
+  .confetti-layer, .hearts-layer{
+    position: fixed; inset: 0; pointer-events: none; z-index: 5; overflow: hidden;
+  }
+  .confetti-piece{
+    position: absolute; top: -20px; width: 8px; height: 14px; border-radius: 2px;
+    animation: confettiFall linear forwards;
+  }
+  @keyframes confettiFall{
+    to{ transform: translateY(115vh) rotate(540deg); opacity: 0.9; }
+  }
+  .heart-pop{
+    position: absolute; bottom: -30px; font-size: 20px; animation: heartFloat 2.8s ease-in forwards;
+  }
+  @keyframes heartFloat{
+    0%{ transform: translateY(0) scale(0.6); opacity: 0; }
+    15%{ opacity: 1; }
+    100%{ transform: translateY(-90vh) scale(1.1); opacity: 0; }
+  }
+
+  /* ---------- gentle screen ---------- */
+  #screen-gentle .gentle-card{
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: 34px 26px;
+    box-shadow: 0 16px 32px var(--shadow);
+    max-width: 330px;
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  #screen-gentle p{ font-size: 16px; line-height: 1.6; color: var(--ink); margin: 0; }
+  #screen-gentle .icon-big{ font-size: 32px; }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+  }
+
+  @media (min-height: 780px){
+    .card-stage{ height: 320px; }
+  }
+  @media (max-height: 700px){
+    .screen{ padding: 22px 20px; gap: 14px; }
+    .card-stage{ height: 250px; }
+    .reveal-lines{ min-height: 170px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="ambient" id="ambient"></div>
+
+<div class="app">
+
+  <!-- ============ SCREEN 1: OPENING ============ -->
+  <section class="screen active" id="screen-opening">
+    <div class="app-icon">♡</div>
+    <h1 class="title-xl" id="opening-greeting">hey jaya ♡</h1>
+    <p class="subtitle" id="opening-sub">aryan has something he's been wanting to tell you...</p>
+    <button class="btn btn-primary" id="btn-start">okayyy, tell me ♡</button>
+  </section>
+
+  <!-- ============ SCREEN 2: STORY ============ -->
+  <section class="screen" id="screen-story">
+    <span class="eyebrow-icon">✨</span>
+    <h2 class="title-lg">a little story first</h2>
+    <div class="story-wrap">
+      <div class="card-stage" id="story-stage"></div>
+      <div class="dots" id="story-dots"></div>
+      <p class="tap-hint">tap the card, or use the buttons ↓</p>
+      <div class="story-nav">
+        <button class="btn btn-secondary" id="story-back">back</button>
+        <button class="btn btn-primary" id="story-next">next ♡</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SCREEN 3: REASONS ============ -->
+  <section class="screen" id="screen-reasons">
+    <span class="eyebrow-icon">🌷</span>
+    <h2 class="title-lg" id="reasons-title">why you, jaya? ♡</h2>
+    <div class="reasons-grid" id="reasons-grid"></div>
+    <button class="btn btn-primary" id="btn-to-proposal">okay okay, keep going ♡</button>
+  </section>
+
+  <!-- ============ SCREEN 4: PROPOSAL ============ -->
+  <section class="screen" id="screen-proposal">
+    <div class="reveal-lines" id="reveal-lines"></div>
+    <div class="question-block" id="question-block">
+      <h2>will you be with me? ♡</h2>
+      <div class="choice-row">
+        <button class="btn btn-primary" id="btn-yes">YES ♡</button>
+        <button class="btn btn-secondary" id="btn-no">I NEED SOME TIME</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SCREEN 5a: YES ============ -->
+  <section class="screen" id="screen-yes">
+    <span class="eyebrow-icon" style="font-size:40px;">🎉</span>
+    <h1 class="title-xl">WAIT—</h1>
+    <h2 class="title-lg">JAYA SAID YES?!</h2>
+    <div class="celebrate-card">
+      <span class="glitch-text">ARYAN.EXE HAS STOPPED WORKING</span>
+      <p style="font-size:15px; color:var(--ink-soft); margin-top:6px;">rebooting... loading happiness... 100%</p>
+    </div>
+    <p class="subtitle" style="margin-top:6px;">okay now go tell him before he combusts ♡</p>
+  </section>
+
+  <!-- ============ SCREEN 5b: NEED TIME ============ -->
+  <section class="screen" id="screen-gentle">
+    <span class="icon-big">🌙</span>
+    <div class="gentle-card">
+      <h2 class="title-lg">that's completely okay ♡</h2>
+      <p>take your time. no pressure, no awkwardness.</p>
+      <p>whatever your answer is, thank you for hearing him out.</p>
+    </div>
+  </section>
+
+</div>
+
+<div class="confetti-layer" id="confettiLayer"></div>
+<div class="hearts-layer" id="heartsLayer"></div>
+
+<script>
+/* ============================================================
+   EDITABLE CONTENT
+   Swap the strings below with the real names / memories / reasons.
+   Everything on the page pulls from this object — no need to touch
+   the HTML or CSS above.
+   ============================================================ */
+const proposalData = {
+  name: "Jaya",
+  sender: "Aryan",
+
+  opening: {
+    greeting: "hey jaya ♡",
+    subtitle: "aryan has something he's been wanting to tell you..."
+  },
+
+  // Story cards — replace with real memories, one string per card.
+  memories: [
+    { icon: "🌱", text: "It started with something simple..." },
+    { icon: "💬", text: "Then somehow, talking to you became one of my favourite parts of the day." },
+    { icon: "⏳", text: "And somewhere between all those little conversations..." },
+    { icon: "🌸", text: "you became someone really special to me." }
+  ],
+
+  // Reasons grid — 4 to 6 cards work best.
+  reasons: [
+    { icon: "☀️", text: "you make normal days feel a little less normal" },
+    { icon: "📱", text: "your name showing up on my phone somehow fixes my mood" },
+    { icon: "😄", text: "you make me smile like an idiot" },
+    { icon: "🧠", text: "you remember the little things" },
+    { icon: "🫶", text: "you're somehow both comforting and exciting" },
+    { icon: "🍃", text: "being around you just feels easy" }
+  ],
+
+  // Final reveal lines, shown one at a time before the question.
+  revealLines: [
+    { text: "okay... enough hiding behind this website", name: false },
+    { text: "jaya,", name: true },
+    { text: "I don't know exactly when it happened...", name: false },
+    { text: "but somewhere between all our conversations, laughs and little moments...", name: false },
+    { text: "I started liking you more than I probably should admit.", name: false }
+  ]
+};
+
+/* ============================================================
+   APP LOGIC — no need to edit below unless changing behaviour.
+   ============================================================ */
+
+// ---- ambient floating hearts/sparkles on every screen ----
+(function ambientDecor(){
+  const layer = document.getElementById('ambient');
+  const glyphs = ['♡','✦','✧','♥'];
+  const count = 10;
+  for(let i=0;i<count;i++){
+    const el = document.createElement('span');
+    el.textContent = glyphs[Math.floor(Math.random()*glyphs.length)];
+    el.style.left = Math.random()*100 + '%';
+    el.style.setProperty('--drift', (Math.random()*60-30)+'px');
+    el.style.fontSize = (12 + Math.random()*14) + 'px';
+    el.style.animationDuration = (10 + Math.random()*10) + 's';
+    el.style.animationDelay = (Math.random()*10) + 's';
+    layer.appendChild(el);
+  }
+})();
+
+function switchScreen(id){
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const target = document.getElementById(id);
+  target.classList.add('active');
+  target.scrollTop = 0;
+  window.scrollTo(0,0);
+}
+
+function tapFeedback(btn){
+  btn.classList.remove('tapped');
+  void btn.offsetWidth; // restart animation
+  btn.classList.add('tapped');
+  if(navigator.vibrate){ try{ navigator.vibrate(12); }catch(e){} }
+}
+
+// ---- opening screen ----
+document.getElementById('opening-greeting').textContent = `hey ${proposalData.name.toLowerCase()} ♡`;
+document.getElementById('opening-sub').textContent = proposalData.opening.subtitle
+  .replace(/aryan/i, proposalData.sender.toLowerCase());
+
+document.getElementById('btn-start').addEventListener('click', (e)=>{
+  tapFeedback(e.currentTarget);
+  setTimeout(()=> switchScreen('screen-story'), 180);
+});
+
+// ---- story cards ----
+let storyIndex = 0;
+const stage = document.getElementById('story-stage');
+const dotsWrap = document.getElementById('story-dots');
+
+function buildStoryCards(){
+  proposalData.memories.forEach((m, i)=>{
+    const card = document.createElement('div');
+    card.className = 'story-card';
+    card.dataset.index = i;
+    card.innerHTML = `<span class="icon">${m.icon}</span><p>${m.text}</p><span class="tag">${i+1} / ${proposalData.memories.length}</span>`;
+    card.addEventListener('click', ()=> goStory(1));
+    stage.appendChild(card);
+
+    const dot = document.createElement('span');
+    dot.className = 'dot';
+    dotsWrap.appendChild(dot);
+  });
+  renderStory();
+}
+
+function renderStory(){
+  const cards = stage.querySelectorAll('.story-card');
+  cards.forEach((c, i)=>{
+    if(i === storyIndex){
+      c.style.transform = 'translateX(0) scale(1)';
+      c.style.opacity = '1';
+      c.style.zIndex = 2;
+    } else if(i < storyIndex){
+      c.style.transform = 'translateX(-30px) scale(0.94)';
+      c.style.opacity = '0';
+      c.style.zIndex = 1;
+    } else {
+      c.style.transform = 'translateX(30px) scale(0.94)';
+      c.style.opacity = '0';
+      c.style.zIndex = 1;
+    }
+  });
+  document.querySelectorAll('.dot').forEach((d,i)=> d.classList.toggle('active', i===storyIndex));
+  document.getElementById('story-back').style.visibility = storyIndex===0 ? 'hidden' : 'visible';
+}
+
+function goStory(dir){
+  const last = proposalData.memories.length - 1;
+  if(storyIndex + dir > last){
+    switchScreen('screen-reasons');
+    return;
+  }
+  storyIndex = Math.max(0, Math.min(last, storyIndex + dir));
+  renderStory();
+}
+
+document.getElementById('story-next').addEventListener('click', (e)=>{ tapFeedback(e.currentTarget); goStory(1); });
+document.getElementById('story-back').addEventListener('click', (e)=>{ tapFeedback(e.currentTarget); goStory(-1); });
+
+buildStoryCards();
+
+// ---- reasons grid ----
+document.getElementById('reasons-title').textContent = `why you, ${proposalData.name.toLowerCase()}? ♡`;
+const reasonsGrid = document.getElementById('reasons-grid');
+proposalData.reasons.forEach((r, i)=>{
+  const card = document.createElement('div');
+  card.className = 'reason-card';
+  card.style.animationDelay = (i*0.08)+'s';
+  card.innerHTML = `<span class="icon">${r.icon}</span><p>${r.text}</p>`;
+  reasonsGrid.appendChild(card);
+});
+
+document.getElementById('btn-to-proposal').addEventListener('click', (e)=>{
+  tapFeedback(e.currentTarget);
+  setTimeout(()=>{
+    switchScreen('screen-proposal');
+    startReveal();
+  }, 180);
+});
+
+// ---- proposal reveal ----
+let revealStarted = false;
+function startReveal(){
+  if(revealStarted) return;
+  revealStarted = true;
+  const wrap = document.getElementById('reveal-lines');
+  const qBlock = document.getElementById('question-block');
+  wrap.innerHTML = '';
+
+  proposalData.revealLines.forEach((line, i)=>{
+    const p = document.createElement('p');
+    p.className = 'reveal-line' + (line.name ? ' name' : '');
+    p.textContent = line.text;
+    wrap.appendChild(p);
+  });
+
+  const lines = wrap.querySelectorAll('.reveal-line');
+  lines.forEach((p, i)=>{
+    setTimeout(()=> p.classList.add('show'), 500 + i*1200);
+  });
+
+  const totalDelay = 500 + lines.length*1200 + 400;
+  setTimeout(()=> qBlock.classList.add('show'), totalDelay);
+}
+
+document.getElementById('btn-yes').addEventListener('click', (e)=>{
+  tapFeedback(e.currentTarget);
+  setTimeout(()=>{
+    switchScreen('screen-yes');
+    celebrate();
+  }, 200);
+});
+
+document.getElementById('btn-no').addEventListener('click', (e)=>{
+  tapFeedback(e.currentTarget);
+  setTimeout(()=> switchScreen('screen-gentle'), 200);
+});
+
+// ---- celebration effects ----
+function celebrate(){
+  const confettiColors = ['#FF9FBB','#EADFF5','#C9B3E8','#FFD9E6','#FFFFFF'];
+  const confettiLayer = document.getElementById('confettiLayer');
+  const heartsLayer = document.getElementById('heartsLayer');
+
+  for(let i=0;i<40;i++){
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    piece.style.left = Math.random()*100 + '%';
+    piece.style.background = confettiColors[Math.floor(Math.random()*confettiColors.length)];
+    piece.style.animationDuration = (2.2 + Math.random()*1.6) + 's';
+    piece.style.animationDelay = (Math.random()*0.6) + 's';
+    confettiLayer.appendChild(piece);
+    setTimeout(()=> piece.remove(), 4200);
+  }
+
+  const heartGlyphs = ['♡','💗','✨'];
+  for(let i=0;i<18;i++){
+    const h = document.createElement('div');
+    h.className = 'heart-pop';
+    h.textContent = heartGlyphs[Math.floor(Math.random()*heartGlyphs.length)];
+    h.style.left = Math.random()*100 + '%';
+    h.style.animationDelay = (Math.random()*1.2) + 's';
+    h.style.animationDuration = (2.4 + Math.random()*1.2) + 's';
+    heartsLayer.appendChild(h);
+    setTimeout(()=> h.remove(), 4200);
+  }
+}
+</script>
+
+</body>
+</html>
